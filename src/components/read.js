@@ -1,51 +1,36 @@
+import { useEffect, useState } from "react";
 import Books from "./books";
+import axios from "axios";
+function Read(){
+         //creating an array of books
+       
+        const [data,setDate] = useState([]);
 
-function Read() {
-    //const variable to hold an array of the books/objects //
-    const data = [
-        {
-            "title": "Learn Git in a Month of Lunches",
-            "isbn": "1617292419",
-            "pageCount": 0,
-            "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
-            "status": "MEAP",
-            "authors": ["Rick Umali"],
-            "categories": []
-        },
-        {
-            "title": "MongoDB in Action, Second Edition",
-            "isbn": "1617291609",
-            "pageCount": 0,
-            "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-            "status": "MEAP",
-            "authors": [
-                " Kyle Banker",
-                ", Peter Bakkum",
-                ", Tim Hawkins",
-                ", Shaun Verch",
-                ", Douglas Garrett"
-            ],
-            "categories": []
-        },
-        {
-            "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-            "isbn": "1617292036",
-            "pageCount": 0,
-            "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-            "status": "MEAP",
-            "authors": ["Simon Holmes"],
-            "categories": []
-        }
-    ];
-
-    return (
+        useEffect(
+            ()=>{
+                axios.get('https://jsonblob.com/api/jsonblob/1161593332966481920')
+                .then(
+                    //getting http response back
+                    (response)=>{
+                        setDate(response.data.books)
+                    }
+                )
+                .catch(
+                    //catches an error in the console
+                    (error)=>{
+                        console.log(error);
+                    }
+                );
+            },[]
+        );
+    
+    return(
         <div>
-            <h2>Hello from Read Component!</h2>
-            <Books myBooks={data}></Books>
-        </div>
 
-
-
-    );
+        <h2>This is my Read in another component</h2>   {/*adds a header */}
+        <Books myBooks={data}></Books>
+    </div>
+        );
 }
+
 export default Read;
